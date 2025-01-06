@@ -1,4 +1,5 @@
 // interfaces
+export class subscriber
 interface IEvent {
   type(): string;
   machineId(): string;
