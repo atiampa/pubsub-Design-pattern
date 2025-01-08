@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +35,36 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.subscriber = void 0;
+// interfaces
+var subscriber = /** @class */ (function () {
+    function subscriber() {
+    }
+    return subscriber;
+}());
+exports.subscriber = subscriber;
+var ISubscriber = /** @class */ (function () {
+    function ISubscriber(machine) {
+        this.machine = machine;
+    }
+    // Virtual function for handling events
+    ISubscriber.prototype.handle = function (event) {
+        throw new Error("Method not implemented.");
+    };
+    // Subscribe to the publisher
+    ISubscriber.prototype.subscribe = function (publisher) {
+        publisher.subscribe(this.machine.id, this);
+    };
+    // Unsubscribe from the publisher
+    ISubscriber.prototype.unsubscribe = function (publisher) {
+        publisher.unsubscribe(this.machine.id);
+    };
+    ISubscriber.prototype.machineId = function () {
+        return this.machine.id;
+    };
+    return ISubscriber;
+}());
 // implementations
 var MachineSaleEvent = /** @class */ (function () {
     function MachineSaleEvent(_sold, _machineId) {
@@ -111,7 +141,7 @@ var eventGenerator = function () {
     return new MachineRefillEvent(refillQty, randomMachine());
 };
 // program
-(function () { return __awaiter(_this, void 0, void 0, function () {
+(function () { return __awaiter(void 0, void 0, void 0, function () {
     var machines, saleSubscriber, pubSubService, events;
     return __generator(this, function (_a) {
         machines = [new Machine('001'), new Machine('002'), new Machine('003')];
